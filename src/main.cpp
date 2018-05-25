@@ -27,13 +27,15 @@ SOFTWARE.
 ******************************************************************************
 */
 
-extern "C" {
+//extern "C" {
 
 /* Includes */
 #include <stddef.h>
 #include "BlueNRG_x_device.h"
 #include "BlueNRG1_sysCtrl.h"
 #include "BlueNRG1_gpio.h"
+#include "factory.h"
+#include "led.h"
 /* Private typedef */
 
 /* Private define  */
@@ -56,13 +58,44 @@ volatile uint32_t lSystickCounter=0;
 */
 int main(void)
 {
-  uint32_t i = 0;
+  uint32_t i1 = 0, i2 = 0, i3 = 0;
+
+  Factory::getFactor().buildSystem();
+  //Factory *test = new Factory;
+  //test->buildSystem();
 
   /* TODO - Add your application code here */
   while (1)
   {
-	  i++;
+	  /*
+	  if (i1>50000L) {
+		  //test->checkButton(Bt1);
+		  Factory::getFactor().checkButton();
+		  i1=0;
+	  }
+	  //i1++;*/
+
+
+	  /* Verifie le timestamp */
+
+	  if (i1>500000L) {
+		  Led::getLed(LED1).toggleLed();
+		  i1=0;
+	  }
+	  if (i2>1000000L) {
+		  Led::getLed(LED2).toggleLed();
+		  i2=0;
+	  }
+
+	  /*if (i3>2000000L) {
+		  Led::getLed(LED3).toggleLed();
+		  i3=0;
+	  }*/
+	  i1++;
+	  i2++;
+	  //i3++;
+
   }
   return 0;
 }
-}
+//}
